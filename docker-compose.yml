@@ -3,13 +3,17 @@ version: '2'
 services:
 
     snappass:
-        build: .
-        image: pinterest/snappass
+        build:
+          context: .
+          dockerfile: Dockerfile
+        image: cryptorama/snappass
         ports:
             - "5000:5000"
         stop_signal: SIGINT
         environment:
             - REDIS_HOST=redis
+            - REDIS_PREFIX=RV
+            - SECRET_KEY=6ardCD6XQ49FLrxY6fd7pB3DeeNmzn8Y
             - NO_SSL=True
         depends_on:
           - redis

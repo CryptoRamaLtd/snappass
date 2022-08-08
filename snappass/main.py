@@ -1,6 +1,8 @@
 import os
 import sys
 import uuid
+import base64
+from datetime import datetime
 
 import redis
 
@@ -62,7 +64,9 @@ def encrypt(password):
     Take a password string, encrypt it with Fernet symmetric encryption,
     and return the result (bytes), with the decryption key (bytes)
     """
-    encryption_key = Fernet.generate_key()
+    #encryption_key = Fernet.generate_key()
+    key = os.environ.get('SECRET_KEY', 'Secret Key')
+    encryption_key = base64.b64encode(key.encode("utf-8"))
     fernet = Fernet(encryption_key)
     encrypted_password = fernet.encrypt(password.encode('utf-8'))
     return encrypted_password, encryption_key
@@ -97,7 +101,8 @@ def set_password(password, ttl):
     Returns a token comprised of the key where the encrypted password
     is stored, and the decryption key.
     """
-    storage_key = REDIS_PREFIX + uuid.uuid4().hex
+    d = datetime.now().strftime("%Y%m%d%H%M%S")
+    storage_key = REDIS_PREFIX + uuid.uuid4().hex + "|" + d
     encrypted_password, encryption_key = encrypt(password)
     redis_client.setex(storage_key, ttl, encrypted_password)
     encryption_key = encryption_key.decode('utf-8')
