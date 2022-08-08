@@ -2,6 +2,8 @@
 SnapPass
 ========
 
+Hosted at: http://54.176.12.255:5000
+
 |pypi|
 
 .. |pypi| image:: https://img.shields.io/pypi/v/snappass.svg
