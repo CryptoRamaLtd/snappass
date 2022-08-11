@@ -2,7 +2,7 @@
 SnapPass
 ========
 
-Hosted at: http://54.176.12.255:5000
+Hosted at: https://secrets.cryptorama.cloud
 
 |pypi|
 
