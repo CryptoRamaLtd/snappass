@@ -64,9 +64,7 @@ def encrypt(password):
     Take a password string, encrypt it with Fernet symmetric encryption,
     and return the result (bytes), with the decryption key (bytes)
     """
-    #encryption_key = Fernet.generate_key()
-    key = os.environ.get('SECRET_KEY', 'Secret Key')
-    encryption_key = base64.b64encode(key.encode("utf-8"))
+    encryption_key = Fernet.generate_key()
     fernet = Fernet(encryption_key)
     encrypted_password = fernet.encrypt(password.encode('utf-8'))
     return encrypted_password, encryption_key
